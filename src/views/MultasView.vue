@@ -1,14 +1,23 @@
 <script setup>
-import {api} from '@/utils/index'
-
-setInterval(() => {
-    boton();
-}, 2000);
-async function boton(){
-    const response = await api();
-    console.log(response);
+import { onMounted } from 'vue';
+import { api } from '../utils/index.js'
+import { onUnmounted } from 'vue';
+async function respuestas(){
+    const respuesta = await api("001");
+    console.log(respuesta);
 }
+
+let IntervalId;
+
+onMounted(()=> {
+    respuestas();
+    IntervalId = setInterval(respuestas, 5000)
+});
+
+onUnmounted(()=>{
+    clearInterval(IntervalId);
+})
+
 </script>
 <template>
-    <!--<button @click="boton"></button>-->
 </template>
